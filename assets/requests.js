@@ -4,6 +4,7 @@ const loginRequest = async (data, fn) => {
     $.ajax({
         url: URL,
         type: "POST",
+        headers: HEADERS,
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(data),
         success: (data) => {
@@ -19,6 +20,7 @@ const registerRequest = (data, fn) => {
     $.ajax({
         url: URL,
         type: "POST",
+        headers: HEADERS,
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(data),
         success: (data) => {
@@ -33,14 +35,12 @@ const getProfile = (fn) => {
 
     const accessToken = window.localStorage.getItem("accessToken");
 
-    const headers = {
-        Authorization: `Bearer ${accessToken}`
-    }
+    HEADERS.Authorization = `Bearer ${accessToken}`;
 
     $.ajax({
         url: URL,
         type: "GET",
-        headers: headers,
+        headers: HEADERS,
         success: (data) => {
             fn(data)
         }
@@ -52,14 +52,12 @@ const getChats = (fn) => {
 
     const accessToken = window.localStorage.getItem("accessToken");
 
-    const headers = {
-        Authorization: `Bearer ${accessToken}`
-    }
+    HEADERS.Authorization = `Bearer ${accessToken}`;
 
     $.ajax({
         url: URL,
         type: "GET",
-        headers: headers,
+        headers: HEADERS,
         success: (data) => {
             fn(data);
         }
@@ -72,14 +70,12 @@ const getChatInner = (uuid, fn) => {
 
     const accessToken = window.localStorage.getItem("accessToken");
 
-    const headers = {
-        Authorization: `Bearer ${accessToken}`
-    }
+    HEADERS.Authorization = `Bearer ${accessToken}`;
 
     $.ajax({
         url: URL,
         type: "GET",
-        headers: headers,
+        headers: HEADERS,
         success: (data) => {
             fn(data)
         },
@@ -96,15 +92,13 @@ const searchUsers = (search, fn) => {
 
     const accessToken = window.localStorage.getItem("accessToken");
 
-    const headers = {
-        Authorization: `Bearer ${accessToken}`
-    }
+    HEADERS.Authorization = `Bearer ${accessToken}`;
 
     $.ajax({
         url: URL,
         type: "GET",
         data: {search: search},
-        headers: headers,
+        headers: HEADERS,
         success: (data) => {
             fn(data)
         }
@@ -116,16 +110,14 @@ const createChatRequest = (userId, fn) => {
 
     const accessToken = window.localStorage.getItem("accessToken");
 
-    const headers = {
-        Authorization: `Bearer ${accessToken}`
-    }
+    HEADERS.Authorization = `Bearer ${accessToken}`;
 
     $.ajax({
         url: URL,
         type: "POST",
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify({ userId: userId }),
-        headers: headers,
+        headers: HEADERS,
         success: (data) => {
             fn(data)
         }
@@ -139,16 +131,14 @@ const sendmessage = (data, fn)  => {
 
     const accessToken = window.localStorage.getItem("accessToken");
 
-    const headers = {
-        Authorization: `Bearer ${accessToken}`
-    }
+    HEADERS.Authorization = `Bearer ${accessToken}`;
 
     $.ajax({
         url: URL,
         type: "POST",
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(data),
-        headers: headers,
+        headers: HEADERS,
         success: (data) => {
             fn(data)
         }
@@ -161,15 +151,13 @@ const getMessages = (uuid, page, fn) => {
 
     const accessToken = window.localStorage.getItem("accessToken");
 
-    const headers = {
-        Authorization: `Bearer ${accessToken}`
-    }
+    HEADERS.Authorization = `Bearer ${accessToken}`;
 
     $.ajax({
         url: URL,
         type: "GET",
         data: {page: page},
-        headers: headers,
+        headers: HEADERS,
         success: (data) => {
             fn(data)
         }
@@ -182,9 +170,7 @@ const sendMessageRead = (uuid) => {
 
     const accessToken = window.localStorage.getItem("accessToken");
 
-    const headers = {
-        Authorization: `Bearer ${accessToken}`
-    }
+    HEADERS.Authorization = `Bearer ${accessToken}`;
 
     $.ajax({
         url: URL,
@@ -199,14 +185,12 @@ const profileUpdateRequest = (data, fn, error) => {
 
     const accessToken = window.localStorage.getItem("accessToken");
 
-    const headers = {
-        Authorization: `Bearer ${accessToken}`
-    }
+    HEADERS.Authorization = `Bearer ${accessToken}`;
 
     $.ajax({
         url: URL,
         type: "PUT",
-        headers: headers,
+        headers: HEADERS,
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(data),
         success: (data) => {

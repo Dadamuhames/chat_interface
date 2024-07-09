@@ -1,5 +1,14 @@
 const BASE_URL = "https://62c9-84-54-120-134.ngrok-free.app";
 
+
+let HEADERS = {
+    "Access-Control-Allow-Credentials": "true",
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET,OPTIONS,PATCH,DELETE,POST,PUT",
+    "Access-Control-Allow-Headers": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
+}
+
+
 const injectHtmlFromId = (url) => {
     $("#app").html($(url).html());
 }
