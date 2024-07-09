@@ -1,0 +1,48 @@
+.dz-preview.dz-processing.dz-image-preview.dz-success.dz-complete {
+    background: none;
+    margin: 0;
+}
+
+
+.dropzone {
+    border-radius: 100px;
+    width: 150px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+
+
+.dz-image {
+    border-radius: 100px !important;
+    width: 150px !important;
+    height: 150px !important;
+    display: flex !important;
+    object-fit: fill !important;
+    align-items: center;
+    justify-content: center;
+}
+
+.dz-image > img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 150px;
+}
+
+.delete-dropzone-image {
+    cursor: pointer !important;
+    z-index: 100;
+    font-size: 20px;
+    color: white;
+    display: block;
+    margin-top: 10px;
+}
+
+.delete-dropzone-image > i {
+    cursor: pointer !important;
+}
+
