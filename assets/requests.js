@@ -31,6 +31,7 @@ const registerRequest = (data, fn) => {
 
 
 const getProfile = (fn) => {
+    $("#loader").addClass("active");
     const URL = `${BASE_URL}/api/auth/me`;
 
     const accessToken = window.localStorage.getItem("accessToken");
@@ -43,11 +44,13 @@ const getProfile = (fn) => {
         headers: HEADERS,
         success: (data) => {
             fn(data)
+            $("#loader").removeClass("active");
         }
     })
 }
 
 const getChats = (fn) => {
+    $("#loader").addClass("active");
     const URL = `${BASE_URL}/api/chats`;
 
     const accessToken = window.localStorage.getItem("accessToken");
@@ -60,12 +63,14 @@ const getChats = (fn) => {
         headers: HEADERS,
         success: (data) => {
             fn(data);
+            $("#loader").removeClass("active");
         }
     })
 }
 
 
 const getChatInner = (uuid, fn) => {
+    $("#loader").addClass("active");
     const URL = `${BASE_URL}/api/chats/${uuid}`;
 
     const accessToken = window.localStorage.getItem("accessToken");
@@ -77,7 +82,9 @@ const getChatInner = (uuid, fn) => {
         type: "GET",
         headers: HEADERS,
         success: (data) => {
+            $("#loader").addClass("active");
             fn(data)
+            $("#loader").removeClass("active");
         },
         error: () => {
             window.location.replace("/404.html")
@@ -106,6 +113,7 @@ const searchUsers = (search, fn) => {
 }
 
 const createChatRequest = (userId, fn) => {
+    $("#loader").addClass("active");
     const URL = `${BASE_URL}/api/chats/createPrivate`
 
     const accessToken = window.localStorage.getItem("accessToken");
@@ -119,7 +127,9 @@ const createChatRequest = (userId, fn) => {
         data: JSON.stringify({ userId: userId }),
         headers: HEADERS,
         success: (data) => {
+            $("#loader").addClass("active");
             fn(data)
+            $("#loader").removeClass("active");
         }
     })
 
@@ -147,6 +157,7 @@ const sendmessage = (data, fn)  => {
 
 
 const getMessages = (uuid, page, fn) => {
+    $("#loader").addClass("active");
     const URL = `${BASE_URL}/api/messages/${uuid}`
 
     const accessToken = window.localStorage.getItem("accessToken");
@@ -159,7 +170,9 @@ const getMessages = (uuid, page, fn) => {
         data: {page: page},
         headers: HEADERS,
         success: (data) => {
+            $("#loader").addClass("active");
             fn(data)
+            $("#loader").removeClass("active");
         }
     })
 }
@@ -175,7 +188,7 @@ const sendMessageRead = (uuid) => {
     $.ajax({
         url: URL,
         type: "POST",
-        headers: headers
+        headers: HEADERS
     })
 }
 

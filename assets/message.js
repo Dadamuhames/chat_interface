@@ -1,5 +1,6 @@
 $(document).on("keydown", "input#message_input", (e) => {
     if (e.key === 'Enter') {
+        $("input#message_input").val("");
         let message = $("input#message_input").val();
         let chatUUID = $("input#message_input").attr("data-chat-id");
 
@@ -83,6 +84,7 @@ const onMessage = (message) => {
 
 const fillMessages = (uuid) => {
     getMessages(uuid, 0, (response) => {
+        $("#loader").addClass("active");
         $(".app .chat-area-main").html("")
         if(response.content.length != 0) {
             $(".app #no-message").remove();
@@ -134,6 +136,8 @@ const fillMessages = (uuid) => {
             let margion_footer = parseInt($('#message_footer_block').css('margin-top'), 10) - 15;
             $('#message_footer_block').css('margin-top', margion_footer);
         }
+
+        $("#loader").removeClass("active");
     })
 
 

@@ -130,7 +130,14 @@ $(document).on("input", "[name='search_users']", (e) => {
   $("#users_search_list").html("")
 
   if (search.length >= 3) {
+    $("#users_search_list").html(
+      `<div class="d-flex justify-content-center">
+        <div class="spinner-border" role="status" style="height: 50px;width:50px">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>`)
     searchUsers(search, (response) => {
+      $("#users_search_list").html("");
       let users = response.content;
 
       for (let user of users) {
