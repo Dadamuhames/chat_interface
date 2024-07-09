@@ -1,4 +1,4 @@
-const BASE_URL = "https://6739-84-54-120-134.ngrok-free.app";
+const BASE_URL = "https://62c9-84-54-120-134.ngrok-free.app";
 
 const injectHtmlFromId = (url) => {
     $("#app").html($(url).html());
