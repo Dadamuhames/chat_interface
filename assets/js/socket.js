@@ -22,14 +22,18 @@ const stompConfig = {
     // Subscriptions should be done inside onConnect as those need to reinstated when the broker reconnects
     onConnect: function (frame) {
         // The return object has a method called `unsubscribe`
-        let sub1 = stompClient.subscribe(`/user/messages`, (message) => {
+        stompClient.subscribe(`/user/messages`, (message) => {
             onMessage(JSON.parse(message.body));
             console.log(message.body);
         }, this.connectHeaders);
 
-        let sub2 = stompClient.subscribe('/user/messages/read', (message) => {
+        stompClient.subscribe('/user/messages/read', (message) => {
             console.log(message.body);
             onMessageRead(JSON.parse(message.body))
+        }, this.connectHeaders);
+
+        stompClient.subscribe('/user/groups/created', (message) => {
+            onChatCreated(JSON.parse(message.body))
         }, this.connectHeaders);
     }
 };

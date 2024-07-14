@@ -9,12 +9,12 @@
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
       rel="stylesheet" id="bootstrap-css">
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="/assets/style.css">
-    <link rel="stylesheet" href="/assets/login.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/login.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="/assets/dropzone.css">
+    <link rel="stylesheet" href="/assets/css/dropzone.css">
   </head>
   <body>
     <!-- partial:index.partial.html -->
@@ -48,11 +48,11 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="/assets/utils.js"></script>
-    <script src="/assets/requests.js"></script>
-    <script src="/assets/auth.js"></script>
+    <script src="/assets/js/utils.js"></script>
+    <script src="/assets/js/requests.js"></script>
+    <script src="/assets/js/auth.js"></script>
 
-    <script src="/assets/profile_edit.js"></script>
+    <script src="/assets/js/profile_edit.js"></script>
     
     <script>
         Dropzone.options.myAwesomeDropzone = false;
@@ -91,6 +91,7 @@
                     data: {filePath: response.filePath},
                     type: "POST",
                     success: (response) => {
+                        $("[name='image']").val("");
                         myDropzone.removeFile(file);
                     }
                 })

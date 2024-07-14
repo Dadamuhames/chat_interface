@@ -1,8 +1,8 @@
 $(document).on("keydown", "input#message_input", (e) => {
     if (e.key === 'Enter') {
-        $("input#message_input").val("");
         let message = $("input#message_input").val();
         let chatUUID = $("input#message_input").attr("data-chat-id");
+        $("input#message_input").val("");
 
         let data = {
             chatUUID: chatUUID,
@@ -25,7 +25,14 @@ $(document).on("keydown", "input#message_input", (e) => {
                 </div>
             `)
 
-            $("input#message_input").val("");
+
+            let html = $(`.chats-in-list[data-chat-id='${response.chatUUID}']`).clone();
+
+            $(`.chats-in-list[data-chat-id='${response.chatUUID}']`).remove();
+
+            $("#users_list").prepend(html)
+            $(`.chats-in-list[data-chat-id='${response.chatUUID}']`).find(".msg-message").text(response.message);
+
             $(".messages_in_list").last().get(0).scrollIntoView();
         })
     }
@@ -37,12 +44,11 @@ const onMessage = (message) => {
     let uuid = url.split("/")[url.split("/").length - 1];
 
     if (uuid == message.chat.uuid.toString()) {
-        $(".app #no-message").remove();
-
         let date = formatTime(message.createdAt);
 
-        $(".app .chat-area-main").append(`
-                <div class="chat-msg messages_in_list id="${message.uuid}"">
+        if(message.chat.type == 'PRIVATE') {
+            $(".app .chat-area-main").append(`
+                <div class="chat-msg messages_in_list" id="${message.uuid}">
                     <div class="chat-msg-profile">
                         <div class="chat-msg-date">${date}</div>
                     </div>
@@ -51,6 +57,23 @@ const onMessage = (message) => {
                     </div>
                 </div>
             `)
+        } else {
+            let image = message.fromUser.image == null ? getProfileImage(message.fromUser.name) : `<img class="msg-profile" src="${message.fromUser.image}"/>`
+
+            $(".app .chat-area-main").append(`
+                <div class="chat-msg messages_in_list" id="${message.uuid}">
+                    <div class="chat-msg-profile">
+                        ${image}
+                        <div class="chat-msg-date">${date}</div>
+                    </div>
+                    <div class="chat-msg-content">
+                        <div class="chat-msg-text">${message.message}</div>
+                    </div>
+                </div>`)
+        }
+
+        $(".app #no-message").remove();
+
 
         $(".messages_in_list").last().get(0).scrollIntoView();
 
@@ -64,11 +87,11 @@ const onMessage = (message) => {
         $(`.chats-in-list[data-chat-id='${message.chat.uuid}']`).remove();
     }
 
+    let image = message.chat.image == null ? getProfileImage(message.chat.name) : `<img class="msg-profile" src="${message.chat.image}"/>`
+
     $("#users_list").prepend(`
         <a class="msg chats-in-list" href="#chats/${message.chat.uuid}" data-chat-id="${message.chat.uuid}">
-            <img class="msg-profile"
-                src="${message.chat.image}"
-                alt />
+            ${image}
             <div class="msg-detail">
                 <div class="msg-username">${message.chat.name}</div>
                 <div class="msg-content">
@@ -94,8 +117,6 @@ const fillMessages = (uuid) => {
         localStorage.setItem("totalPages", response.totalPages);
 
         let lastDate;
-        // let firstDate = response.content[response.content.length-1]?.createdAt
-        // localStorage.setItem("lastDateForChat", formatDate(firstDate));
 
         response.content.reverse();
 
@@ -115,16 +136,31 @@ const fillMessages = (uuid) => {
                 $(".app .chat-area-main").append(`<div class='date-in-chat' data-date="${lastDate}">${lastDate}</div>`)
             }
 
-            $(".app .chat-area-main").append(`
-                <div class="chat-msg ${owner} messages_in_list" id="${message.uuid}">
-                    <div class="chat-msg-profile">
-                        <div class="chat-msg-date">${time} <span class='checked'>${check}</span></div>
+            if (message.fromUser == null || message.isMyMessage) {
+                $(".app .chat-area-main").append(`
+                    <div class="chat-msg ${owner} messages_in_list" id="${message.uuid}">
+                        <div class="chat-msg-profile">
+                            <div class="chat-msg-date">${time} <span class='checked'>${check}</span></div>
+                        </div>
+                        <div class="chat-msg-content">
+                            <div class="chat-msg-text">${message.message}</div>
+                        </div>
                     </div>
-                    <div class="chat-msg-content">
-                        <div class="chat-msg-text">${message.message}</div>
-                    </div>
-                </div>
-            `)
+                `)
+            } else {
+                let image = message.fromUser.image == null ? getProfileImage(message.fromUser.name) : `<img class="msg-profile" src="${message.fromUser.image}"/>`
+
+                $(".app .chat-area-main").append(`
+                    <div class="chat-msg messages_in_list" id="${message.uuid}">
+                        <div class="chat-msg-profile">
+                            ${image}
+                            <div class="chat-msg-date">${time} <span class='checked'>${check}</span></div>
+                        </div>
+                        <div class="chat-msg-content">
+                            <div class="chat-msg-text">${message.message}</div>
+                        </div>
+                    </div>`)
+            }
 
             lastId = message.uuid;
             
@@ -179,16 +215,32 @@ const loadMoreMessages = () => {
                 firstDate = formatedDate;
             }
 
-            $(".app .chat-area-main").prepend(`
-                <div class="chat-msg ${owner} messages_in_list" id="${message.uuid}">
-                    <div class="chat-msg-profile">
-                        <div class="chat-msg-date">${time}  <span class='checked'>${check}</span></div>
+            if (message.fromUser == null || message.isMyMessage) {
+                $(".app .chat-area-main").prepend(`
+                    <div class="chat-msg ${owner} messages_in_list" id="${message.uuid}">
+                        <div class="chat-msg-profile">
+                            <div class="chat-msg-date">${time}  <span class='checked'>${check}</span></div>
+                        </div>
+                        <div class="chat-msg-content">
+                            <div class="chat-msg-text">${message.message}</div>
+                        </div>
                     </div>
-                    <div class="chat-msg-content">
-                        <div class="chat-msg-text">${message.message}</div>
-                    </div>
-                </div>
-            `)
+                `)
+            } else {
+                let image = message.fromUser.image == null ? getProfileImage(message.fromUser.name) : `<img class="msg-profile" src="${message.fromUser.image}"/>`
+
+                $(".app .chat-area-main").prepend(`
+                    <div class="chat-msg messages_in_list" id="${message.uuid}">
+                        <div class="chat-msg-profile">
+                            ${image}
+                            <div class="chat-msg-date">${time} <span class='checked'>${check}</span></div>
+                        </div>
+                        <div class="chat-msg-content">
+                            <div class="chat-msg-text">${message.message}</div>
+                        </div>
+                    </div>`)                
+            }
+
 
             lastId = message.uuid;
         }

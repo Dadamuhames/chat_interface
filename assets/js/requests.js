@@ -8,7 +8,9 @@ const loginRequest = async (data, fn) => {
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(data),
         success: (data) => {
+            $("#loader").addClass("active");
             fn(data)
+            $("#loader").removeClass("active");
         }
     })
 }
@@ -24,7 +26,9 @@ const registerRequest = (data, fn) => {
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(data),
         success: (data) => {
+            $("#loader").addClass("active");
             fn(data)
+            $("#loader").removeClass("active");
         }
     })
 }
@@ -133,6 +137,29 @@ const createChatRequest = (userId, fn) => {
         }
     })
 
+}
+
+
+const createGroupChatRequest = (data, fn) => {
+    $("#loader").addClass("active");
+    const URL = `${BASE_URL}/api/chats/createGroup`
+
+    const accessToken = window.localStorage.getItem("accessToken");
+
+    HEADERS.Authorization = `Bearer ${accessToken}`;
+
+    $.ajax({
+        url: URL,
+        type: "POST",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(data),
+        headers: HEADERS,
+        success: (data) => {
+            $("#loader").addClass("active");
+            fn(data)
+            $("#loader").removeClass("active");
+        }
+    })
 }
 
 

@@ -1,4 +1,4 @@
-const BASE_URL = "https://ddcb-84-54-120-134.ngrok-free.app";
+const BASE_URL = "https://6d6a-84-54-120-230.ngrok-free.app" //"https://d879-84-54-120-134.ngrok-free.app";
 
 
 let HEADERS = {

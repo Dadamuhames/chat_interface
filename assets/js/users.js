@@ -11,7 +11,7 @@ const fillChats = () => {
           <div class="msg-detail">
             <div class="msg-username">${chat.name}</div>
             <div class="msg-content">
-              <span class="msg-message">@${chat.username}</span>
+              <span class="msg-message">${chat.lastMessage || ""}</span>
             </div>
           </div>
           ${newMessages}
@@ -30,6 +30,8 @@ const chatInner = (url) => {
   getChatInner(uuid, (response) => {
     let image = response.image == null ? getProfileImage(response.name) : `<img class="user-profile" src="${response.image}"/>`
     let imageBig = response.image == null ? image : `<img class="msg-profile group" src="${response.image}"/>`
+
+    let username = response.user ? `<div class="detail-subtitle">@${response.user.username}</div>` : ""
 
     $("#message_block_header").html(`
             <div class="chat-area-header">
@@ -76,7 +78,7 @@ const chatInner = (url) => {
         <div class="detail-area-header">
           ${imageBig}
           <div class="detail-title">${response.name}</div>
-          <div class="detail-subtitle">@${response.user.username}</div>
+          ${username}
         </div>
         <div class="detail-changes">
           <input type="text" placeholder="Search in Conversation">
@@ -123,7 +125,6 @@ $(document).on("click", "#openUsersModal", (e) => {
   $("#userSearchModal").modal("show")
 })
 
-
 $(document).on("input", "[name='search_users']", (e) => {
   let search = $(e.target).val();
 
@@ -136,6 +137,7 @@ $(document).on("input", "[name='search_users']", (e) => {
           <span class="sr-only">Loading...</span>
         </div>
       </div>`)
+      
     searchUsers(search, (response) => {
       $("#users_search_list").html("");
       let users = response.content;
@@ -153,10 +155,10 @@ $(document).on("input", "[name='search_users']", (e) => {
           <a class="msg" href="${chatUrl}">
               ${image}
               <div class="msg-detail">
-              <div class="msg-username">${user.name}</div>
-              <div class="msg-content">
-                  <span class="msg-message">@${user.username}</span>
-              </div>
+                <div class="msg-username">${user.name}</div>
+                <div class="msg-content">
+                    <span class="msg-message">@${user.username}</span>
+                </div>
               </div>
           </a>
         `);
