@@ -1,6 +1,9 @@
 $(document).on("keydown", "input#message_input", (e) => {
     if (e.key === 'Enter') {
         let message = $("input#message_input").val();
+
+        message = DOMPurify.sanitize(message);
+
         let chatUUID = $("input#message_input").attr("data-chat-id");
         $("input#message_input").val("");
 
@@ -53,7 +56,7 @@ const onMessage = (message) => {
                         <div class="chat-msg-date">${date}</div>
                     </div>
                     <div class="chat-msg-content">
-                        <div class="chat-msg-text">${message.message}</div>
+                        <div class="chat-msg-text">${DOMPurify.sanitize(message.message)}</div>
                     </div>
                 </div>
             `)
@@ -67,7 +70,7 @@ const onMessage = (message) => {
                         <div class="chat-msg-date">${date}</div>
                     </div>
                     <div class="chat-msg-content">
-                        <div class="chat-msg-text">${message.message}</div>
+                        <div class="chat-msg-text">${DOMPurify.sanitize(message.message)}</div>
                     </div>
                 </div>`)
         }
@@ -95,7 +98,7 @@ const onMessage = (message) => {
             <div class="msg-detail">
                 <div class="msg-username">${message.chat.name}</div>
                 <div class="msg-content">
-                    <span class="msg-message">${message.message}</span>
+                    <span class="msg-message">${DOMPurify.sanitize(message.message)}</span>
                 </div>
             </div>
             <span class="new_message_span">${message.newMessagesCount}</span>
@@ -143,7 +146,7 @@ const fillMessages = (uuid) => {
                             <div class="chat-msg-date">${time} <span class='checked'>${check}</span></div>
                         </div>
                         <div class="chat-msg-content">
-                            <div class="chat-msg-text">${message.message}</div>
+                            <div class="chat-msg-text">${DOMPurify.sanitize(message.message)}</div>
                         </div>
                     </div>
                 `)
@@ -157,7 +160,7 @@ const fillMessages = (uuid) => {
                             <div class="chat-msg-date">${time} <span class='checked'>${check}</span></div>
                         </div>
                         <div class="chat-msg-content">
-                            <div class="chat-msg-text">${message.message}</div>
+                            <div class="chat-msg-text">${DOMPurify.sanitize(message.message)}</div>
                         </div>
                     </div>`)
             }
@@ -222,7 +225,7 @@ const loadMoreMessages = () => {
                             <div class="chat-msg-date">${time}  <span class='checked'>${check}</span></div>
                         </div>
                         <div class="chat-msg-content">
-                            <div class="chat-msg-text">${message.message}</div>
+                            <div class="chat-msg-text">${DOMPurify.sanitize(message.message)}</div>
                         </div>
                     </div>
                 `)
@@ -236,7 +239,7 @@ const loadMoreMessages = () => {
                             <div class="chat-msg-date">${time} <span class='checked'>${check}</span></div>
                         </div>
                         <div class="chat-msg-content">
-                            <div class="chat-msg-text">${message.message}</div>
+                            <div class="chat-msg-text">${DOMPurify.sanitize(message.message)}</div>
                         </div>
                     </div>`)                
             }
